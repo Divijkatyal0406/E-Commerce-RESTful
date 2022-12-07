@@ -5,6 +5,8 @@ const dotenv=require('dotenv');
 const userRoute=require('./routes/user');
 const AuthRoute=require('./routes/auth');
 const productRoute=require('./routes/product');
+const orderRoute=require('./routes/product');
+const cartRoute=require('./routes/cart');
 dotenv.config();
 
 mongoose.connect(process.env.MONGO_URL).then(()=>{
@@ -20,7 +22,8 @@ app.use(express.json());
 app.use("/api/users",userRoute);
 app.use("/api/auth",AuthRoute);
 app.use("/api/products",productRoute);
-
+app.use("/api/cart",cartRoute);
+app.use("/api/order",orderRoute);
 
 app.listen(process.env.PORT || 5000,()=>{
     console.log("Server Running");
