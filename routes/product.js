@@ -1,18 +1,19 @@
 const router=require('express').Router();
 const {verifyToken,verifyTokenAndAuthenticate,verifyTokenAndAdmin}=require('./verifyToken');
 const CryptoJS=require('crypto-js');
-const Product = require('../models/User');
+const Product = require('../models/Product');
 
 
-router.post('/',verifyTokenAndAdmin,async(req,res)=>{
-    const newProd=new Product(req.body);
+router.post("/", verifyTokenAndAdmin, async (req, res) => {
+    const newProduct = new Product(req.body);
+  
     try {
-        const saved=await newProd.save();
-        res.status(201).json(saved);
-    } catch (error) {
-        req.json(500).json(error);
+      const savedProduct = await newProduct.save();
+      res.status(200).json(savedProduct);
+    } catch (err) {
+      res.status(500).json(err);
     }
-})
+  });
 
 router.put('/:id',verifyTokenAndAuthenticate,async (req,res)=>{
     try{
@@ -45,7 +46,7 @@ router.get('/find/:id',verifyTokenAndAdmin,async (req,res)=>{
 })
 
 
-router.get('/',verifyTokenAndAdmin,async (req,res)=>{
+router.get('/',async (req,res)=>{
     try{
         const qnew=req.query.new;
         const qcategory=req.query.category
